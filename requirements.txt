@@ -1,0 +1,11 @@
+flask 
+flask-sqlalchemy 
+flask-marshmallow
+flask-migrate
+marshmallow-sqlalchemy
+werkzeug 
+python-dotenv
+reportlab 
+psycopg2-binary 
+pytest 
+pytest-flask
