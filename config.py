@@ -2,7 +2,7 @@
 '''secret_ key --> generate random hex characters
 run --> python3 -c 'import secrets; print(secrets.token_hex())'
 '''
-class Config(object):
+class config_class(object):
     #for production 
     TESTING = False 
     #Database server for producton
@@ -12,16 +12,16 @@ class Config(object):
         return f"mysql://user@{self.DB_SERVER}/foo"
     
 #Production environment
-class Production(Config):
+class Production(config_class):
     DEBUG = False
     DB_SERVER = '192.168.1.32'
     
 #Development environmet where debugging is true   
-class Development(Config):
+class Development(config_class):
     DEBUG = True
     DB_SERVER ='localhost'
     
 #Testing environment    
-class Testing(Config):
+class Testing(config_class):
     DB_SERVER = 'localhost'
     DATABASE_URI = 'sqlite:///:memory:'
