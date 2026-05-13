@@ -73,7 +73,7 @@ Empowers management with actionable data and ensures statutory compliance
 
 ## 5. Potential Integrations
 To make the system a true enterprise hub, plan for the following integrations:
-- **Payment Gateways (Kenya Specific):
+- **Payment Gateways (Kenya Specific)**:
       - **MPESA B2C API**: For instant disbursement of wages, casual worker pay, or salary advances directly to mobile wallets.
       - **Pesalink/Bank APIs**: Direct integration with banks (e.g., Equity, KCB, NCBA) for automated bulk salary transfers via host-to-host
          (H2H) connections.
@@ -84,15 +84,15 @@ To make the system a true enterprise hub, plan for the following integrations:
 
 ## 6. Key Compliance Requirements (Kenyan Context)
 Designing for the Kenyan market requires strict adherence to local laws. Your system architecture must natively support the following rules as of 2026:
-    - **PAYE (Pay As You Earn)**: Dynamic tax bands. The system must easily update when the Finance Act changes tax brackets, personal relief, and 
+- **PAYE (Pay As You Earn)**: Dynamic tax bands. The system must easily update when the Finance Act changes tax brackets, personal relief, and 
       insurance relief.
-    - **NSSF (National Social Security Fund)**: Support for both Tier 1 and Tier 2 contributions, automatically capping based on the legally defines
+- **NSSF (National Social Security Fund)**: Support for both Tier 1 and Tier 2 contributions, automatically capping based on the legally defines
       lower and upper earning limits.
-    - **SHIF (Social Health Insurance Fund)**: Note: SHIF replaced NHIF under the Social Health Authority (SHA). The system must calculate the 
+- **SHIF (Social Health Insurance Fund)**: Note: SHIF replaced NHIF under the Social Health Authority (SHA). The system must calculate the 
       mandatory 2.75% gross salary deduction with no upper cap, replacing the old tiered NHIF system.
-    - **Affordable Housing Levy (AHL)**: Mandatory deduction of 1.5% of gross salary by the employee, matched by 1.5% from the employer.
-    - **NITA (National Industrial Training Authority)**: Tracking and generating the standard monthly employer contribution per employee.
-    - **Data Protection Act (DPA Kenya)**: The architecture must ensure Data Privacy by Design. This includes encrypting PII (Personally Identifiable
+- **Affordable Housing Levy (AHL)**: Mandatory deduction of 1.5% of gross salary by the employee, matched by 1.5% from the employer.
+- **NITA (National Industrial Training Authority)**: Tracking and generating the standard monthly employer contribution per employee.
+- **Data Protection Act (DPA Kenya)**: The architecture must ensure Data Privacy by Design. This includes encrypting PII (Personally Identifiable
       Information) at rest, supporting "Right to be Forgotten" workflows, and registering the system as a data processor with the Office of the Data
       Protection Commissioner (ODPC).
-    - **Employment Act, 2007**: System logic must enforce statutory minimums (e.g., 21 days annual leave, 3 months maternity leave, 2 weeks paternity leave).
+- **Employment Act, 2007**: System logic must enforce statutory minimums (e.g., 21 days annual leave, 3 months maternity leave, 2 weeks paternity leave).
