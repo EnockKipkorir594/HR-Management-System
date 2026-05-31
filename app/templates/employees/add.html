@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}{% if editing %}Edit{% else %}Add{% endif %} Employee{% endblock %}
+{% block page_title %}{% if editing %}Edit Employee{% else %}Add New Employee{% endif %}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <div class="card">
+      <div class="card-body p-4">
+        <form method="POST">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">First Name *</label>
+              <input type="text" name="first_name" class="form-control"
+                     value="{{ emp.first_name if emp else '' }}" required/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Last Name *</label>
+              <input type="text" name="last_name" class="form-control"
+                     value="{{ emp.last_name if emp else '' }}" required/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email *</label>
+              <input type="email" name="email" class="form-control"
+                     value="{{ emp.email if emp else '' }}" required/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone</label>
+              <input type="text" name="phone" class="form-control"
+                     value="{{ emp.phone if emp else '' }}"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">National ID</label>
+              <input type="text" name="national_id" class="form-control"
+                     value="{{ emp.national_id if emp else '' }}"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Gender</label>
+              <select name="gender" class="form-select">
+                <option value="">-- Select --</option>
+                <option value="Male"   {% if emp and emp.gender=='Male'   %}selected{% endif %}>Male</option>
+                <option value="Female" {% if emp and emp.gender=='Female' %}selected{% endif %}>Female</option>
+                <option value="Other"  {% if emp and emp.gender=='Other'  %}selected{% endif %}>Other</option>
+              </select>
+            </div>
+
+            <div class="col-12"><hr class="my-1"/><h6 class="text-muted">Employment Details</h6></div>
+
+            <div class="col-md-6">
+              <label class="form-label">Department *</label>
+              <input type="text" name="department" class="form-control"
+                     value="{{ emp.department if emp else '' }}"
+                     list="dept-list" required/>
+              <datalist id="dept-list">
+                <option value="Human Resources"/>
+                <option value="Finance"/>
+                <option value="Information Technology"/>
+                <option value="Operations"/>
+                <option value="Sales & Marketing"/>
+                <option value="Administration"/>
+              </datalist>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Job Title *</label>
+              <input type="text" name="job_title" class="form-control"
+                     value="{{ emp.job_title if emp else '' }}" required/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Employment Type</label>
+              <select name="employment_type" class="form-select">
+                {% for val, label in [('full_time','Full Time'),('part_time','Part Time'),('contract','Contract'),('casual','Casual')] %}
+                <option value="{{ val }}"
+                  {% if emp and emp.employment_type==val %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            {% if not editing %}
+            <div class="col-md-6">
+              <label class="form-label">Date Hired *</label>
+              <input type="date" name="date_hired" class="form-control" required/>
+            </div>
+            {% endif %}
+
+            <div class="col-12"><hr class="my-1"/><h6 class="text-muted">Salary & Allowances (KES)</h6></div>
+
+            <div class="col-md-4">
+              <label class="form-label">Basic Salary</label>
+              <input type="number" name="basic_salary" class="form-control"
+                     step="0.01" min="0"
+                     value="{{ emp.basic_salary if emp else 0 }}"/>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">House Allowance</label>
+              <input type="number" name="house_allowance" class="form-control"
+                     step="0.01" min="0"
+                     value="{{ emp.house_allowance if emp else 0 }}"/>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Transport Allowance</label>
+              <input type="number" name="transport_allow" class="form-control"
+                     step="0.01" min="0"
+                     value="{{ emp.transport_allow if emp else 0 }}"/>
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-2">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-1"></i>
+                {% if editing %}Update Employee{% else %}Add Employee{% endif %}
+              </button>
+              <a href="{{ url_for('employees.list_employees') }}"
+                 class="btn btn-outline-secondary">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

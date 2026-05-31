@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}HR & Payroll System{% endblock %}</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root { --primary:#1a6b5a; --accent:#f4a261; }
+    body  { background:#f5f6fa; font-family:'Segoe UI',sans-serif; }
+    .sidebar { background:var(--primary); min-height:100vh; width:240px;
+               position:fixed; top:0; left:0; z-index:100; }
+    .sidebar .brand { color:#fff; font-size:1.1rem; font-weight:700;
+                      padding:1.2rem 1rem; border-bottom:1px solid rgba(255,255,255,.15); }
+    .sidebar .nav-link { color:rgba(255,255,255,.8); padding:.6rem 1rem;
+                         border-radius:6px; margin:.1rem .5rem; font-size:.9rem; }
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active { background:rgba(255,255,255,.15);
+                                color:#fff; }
+    .sidebar .nav-link i { width:20px; }
+    .main-content { margin-left:240px; padding:1.5rem; }
+    .topbar { background:#fff; border-radius:10px; padding:.75rem 1.25rem;
+              margin-bottom:1.5rem; display:flex; justify-content:space-between;
+              align-items:center; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+    .stat-card { background:#fff; border-radius:12px; padding:1.25rem;
+                 box-shadow:0 1px 4px rgba(0,0,0,.06); border-left:4px solid var(--primary); }
+    .stat-card .stat-value { font-size:1.8rem; font-weight:700; color:var(--primary); }
+    .stat-card .stat-label { font-size:.82rem; color:#888; }
+    .card { border:none; border-radius:12px;
+            box-shadow:0 1px 4px rgba(0,0,0,.06); }
+    .btn-primary { background:var(--primary); border-color:var(--primary); }
+    .btn-primary:hover { background:#155748; border-color:#155748; }
+    .badge-admin    { background:#dc3545; }
+    .badge-hr       { background:#0d6efd; }
+    .badge-employee { background:#198754; }
+    @media(max-width:768px){
+      .sidebar { display:none; }
+      .main-content { margin-left:0; }
+    }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+{% if current_user.is_authenticated %}
+<div class="sidebar d-flex flex-column">
+  <div class="brand">
+    <i class="fas fa-building me-2"></i>HR &amp; Payroll
+  </div>
+  <nav class="nav flex-column mt-2 flex-grow-1">
+    <a class="nav-link {% if request.endpoint=='dashboard.index' %}active{% endif %}"
+       href="{{ url_for('dashboard.index') }}">
+      <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+    </a>
+    {% if current_user.is_hr() %}
+    <a class="nav-link {% if 'employees' in request.endpoint %}active{% endif %}"
+       href="{{ url_for('employees.list_employees') }}">
+      <i class="fas fa-users me-2"></i>Employees
+    </a>
+    <a class="nav-link {% if 'payroll' in request.endpoint %}active{% endif %}"
+       href="{{ url_for('payroll.list_payroll') }}">
+      <i class="fas fa-money-check-alt me-2"></i>Payroll
+    </a>
+    {% endif %}
+    {% if current_user.is_admin() %}
+    <a class="nav-link" href="{{ url_for('auth.register') }}">
+      <i class="fas fa-user-plus me-2"></i>Add User
+    </a>
+    {% endif %}
+    <div class="mt-auto mb-3 px-2">
+      <div class="text-white-50 small px-2 mb-1">
+        <i class="fas fa-user-circle me-1"></i>{{ current_user.full_name }}
+        <span class="badge badge-{{ current_user.role }} ms-1">
+          {{ current_user.role }}
+        </span>
+      </div>
+      <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}">
+        <i class="fas fa-sign-out-alt me-2"></i>Logout
+      </a>
+    </div>
+  </nav>
+</div>
+
+<div class="main-content">
+  <div class="topbar">
+    <div class="fw-semibold text-muted">
+      {% block page_title %}{% endblock %}
+    </div>
+    <div class="text-muted small">
+      {{ now.strftime('%A, %d %B %Y') if now else '' }}
+    </div>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}
+      <div class="alert alert-{{ cat }} alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</div>
+
+{% else %}
+  {% block auth_content %}{% endblock %}
+{% endif %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>
