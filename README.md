@@ -50,7 +50,7 @@ The financial engine of the application. Requires high precision and auditabilit
 - **Proration Engine**: Automatic salary calculation for employees joining or leaving mid-month.
 - **Off-Cycle Payroll Runs**: Support for ad-hoc payments like annual bonuses, commissions, or severance packages.
 
-### Module 4 : Repoarting & Analytics
+### Module 4 : Reporting & Analytics
 Empowers management with actionable data and ensures statutory compliance 
 - **Statutory Export Files**: Auto-generated CSV/Excel formats for KRA (P10, P9 forms), NSSF, and Health Fund portals.
 - **Payroll Variance Reports**: Month-over-month comparison highlighting significant changes in the wage bill.
