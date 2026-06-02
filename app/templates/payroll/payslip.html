@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% block title %}Payslip — {{ emp.full_name }}{% endblock %}
+{% block page_title %}Payslip{% endblock %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card" id="payslip">
+      <div class="card-body p-4">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-start mb-4">
+          <div>
+            <h4 class="fw-bold text-success mb-0">
+              <i class="fas fa-building me-2"></i>HR &amp; Payroll System
+            </h4>
+            <div class="text-muted small">Multimedia University of Kenya</div>
+          </div>
+          <div class="text-end">
+            <div class="fw-bold">PAYSLIP</div>
+            <div class="text-muted small">Period: {{ record.pay_period }}</div>
+            <div class="text-muted small">
+              Pay Date: {{ record.pay_date.strftime('%d %B %Y') }}
+            </div>
+          </div>
+        </div>
+
+        <hr/>
+
+        <!-- Employee Info -->
+        <div class="row mb-4">
+          <div class="col-6">
+            <div class="small text-muted">Employee Name</div>
+            <div class="fw-semibold">{{ emp.full_name }}</div>
+          </div>
+          <div class="col-6">
+            <div class="small text-muted">Employee Number</div>
+            <div class="fw-semibold">{{ emp.employee_number }}</div>
+          </div>
+          <div class="col-6 mt-2">
+            <div class="small text-muted">Department</div>
+            <div class="fw-semibold">{{ emp.department }}</div>
+          </div>
+          <div class="col-6 mt-2">
+            <div class="small text-muted">Job Title</div>
+            <div class="fw-semibold">{{ emp.job_title }}</div>
+          </div>
+        </div>
+
+        <!-- Earnings -->
+        <h6 class="fw-bold text-success mb-2">
+          <i class="fas fa-plus-circle me-1"></i>Earnings
+        </h6>
+        <table class="table table-sm mb-3">
+          <tbody>
+            <tr>
+              <td>Basic Salary</td>
+              <td class="text-end">
+                KES {{ '{:,.2f}'.format(record.basic_salary) }}
+              </td>
+            </tr>
+            <tr>
+              <td>House Allowance</td>
+              <td class="text-end">
+                KES {{ '{:,.2f}'.format(record.house_allowance) }}
+              </td>
+            </tr>
+            <tr>
+              <td>Transport Allowance</td>
+              <td class="text-end">
+                KES {{ '{:,.2f}'.format(record.transport_allow) }}
+              </td>
+            </tr>
+            {% if record.overtime_pay > 0 %}
+            <tr>
+              <td>Overtime</td>
+              <td class="text-end">
+                KES {{ '{:,.2f}'.format(record.overtime_pay) }}
+              </td>
+            </tr>
+            {% endif %}
+            {% if record.bonus > 0 %}
+            <tr>
+              <td>Bonus</td>
+              <td class="text-end">
+                KES {{ '{:,.2f}'.format(record.bonus) }}
+              </td>
+            </tr>
+            {% endif %}
+            <tr class="table-light fw-bold">
+              <td>Gross Pay</td>
+              <td class="text-end">
+                KES {{ '{:,.2f}'.format(record.gross_pay) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Deductions -->
+        <h6 class="fw-bold text-danger mb-2">
+          <i class="fas fa-minus-circle me-1"></i>Deductions
+        </h6>
+        <table class="table table-sm mb-3">
+          <tbody>
+            <tr>
+              <td>PAYE (Income Tax)</td>
+              <td class="text-end text-danger">
+                KES {{ '{:,.2f}'.format(record.paye) }}
+              </td>
+            </tr>
+            <tr>
+              <td>NHIF</td>
+              <td class="text-end text-danger">
+                KES {{ '{:,.2f}'.format(record.nhif) }}
+              </td>
+            </tr>
+            <tr>
+              <td>NSSF</td>
+              <td class="text-end text-danger">
+                KES {{ '{:,.2f}'.format(record.nssf) }}
+              </td>
+            </tr>
+            {% if record.loan_deduction > 0 %}
+            <tr>
+              <td>Loan Deduction</td>
+              <td class="text-end text-danger">
+                KES {{ '{:,.2f}'.format(record.loan_deduction) }}
+              </td>
+            </tr>
+            {% endif %}
+            <tr class="table-light fw-bold">
+              <td>Total Deductions</td>
+              <td class="text-end text-danger">
+                KES {{ '{:,.2f}'.format(record.total_deductions) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Net Pay -->
+        <div class="p-3 rounded text-white text-center"
+             style="background:var(--primary, #1a6b5a);">
+          <div class="small opacity-75">NET PAY</div>
+          <div style="font-size:2rem; font-weight:700;">
+            KES {{ '{:,.2f}'.format(record.net_pay) }}
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+          <button onclick="window.print()" class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-print me-1"></i>Print
+          </button>
+          <a href="{{ url_for('payroll.list_payroll') }}"
+             class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-arrow-left me-1"></i>Back
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
